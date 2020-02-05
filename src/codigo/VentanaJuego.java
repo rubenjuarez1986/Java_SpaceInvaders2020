@@ -23,12 +23,13 @@ public class VentanaJuego extends javax.swing.JFrame {
 
     int filasmarcianos = 5;
     int columnasMarcianos = 10;
-    
+
     BufferedImage buffer = null;
-    
+    int contador = 0;
+
     //bucle de animaciòn del juego en este caso es un hilo de ejecuciòn que se 
     //encarga de refrescar el contenido de la pantalla
-    Timer temporizador = new Timer (10,new ActionListener() {
+    Timer temporizador = new Timer(10, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             //TODO : Còdigo de la animación
@@ -47,25 +48,34 @@ public class VentanaJuego extends javax.swing.JFrame {
         buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
         // nos permite crear imagenes y dibujos
         buffer.createGraphics();
-        
+
         //arranco el temporizador para que empiece el juego
         temporizador.start();
-        
+
     }
-    
-    private void bucleDelJuego(){
-    //el mètodo gobierna el redibujado de los objetos en el jPanel1
-    //primero borro todo lo que hay en el buffer
+
+    private void bucleDelJuego() {
+        //el mètodo gobierna el redibujado de los objetos en el jPanel1
+        //primero borro todo lo que hay en el buffer
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setColor(Color.black);//PINTO UN RECTANGULO NEGRO EN LA PANTALLA
         g2.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
+
+        contador++;
         ////////////////////////////////////////////////////////////////////
-        g2.drawImage (miMarciano.imagen1,10,10,null);
-         g2.drawImage (miMarciano.imagen2,10,100,null);
-        
+        if (contador < 50) {
+            g2.drawImage(miMarciano.imagen1, 10, 10, null);
+
+        } else if (contador < 100) {
+            g2.drawImage(miMarciano.imagen2, 10, 10, null);
+        } else {
+            contador = 0;
+
+        }
+
         ///////////////////////////////////////////////////////////////////
         g2 = (Graphics2D) jPanel1.getGraphics();
-        g2.drawImage(buffer, 0, 0,null);
+        g2.drawImage(buffer, 0, 0, null);
     }
 
     /**
