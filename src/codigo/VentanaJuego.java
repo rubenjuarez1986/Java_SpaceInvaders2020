@@ -39,7 +39,8 @@ public class VentanaJuego extends javax.swing.JFrame {
     });
     Marciano miMarciano = new Marciano(ANCHOPANTALLA);
     Nave miNave = new Nave();
-    
+    Disparo miDisparo = new Disparo();
+
     /**
      * Creates new form VentanaJuego
      */
@@ -53,7 +54,7 @@ public class VentanaJuego extends javax.swing.JFrame {
 
         //arranco el temporizador para que empiece el juego
         temporizador.start();
-        miNave.posX = ANCHOPANTALLA /2 - miNave.imagen.getWidth(this)/2;
+        miNave.posX = ANCHOPANTALLA / 2 - miNave.imagen.getWidth(this) / 2;
         miNave.posY = ALTOPANTALLA - 100;
     }
 
@@ -64,7 +65,6 @@ public class VentanaJuego extends javax.swing.JFrame {
         g2.setColor(Color.black);//PINTO UN RECTANGULO NEGRO EN LA PANTALLA
         g2.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
 
-        
         ////////////////////////////////////////////////////////////////////
         contador++;
         if (contador < 50) {
@@ -76,14 +76,16 @@ public class VentanaJuego extends javax.swing.JFrame {
             contador = 0;
 
         }
-        
+
         //dibujo la nave
         g2.drawImage(miNave.imagen, miNave.posX, miNave.posY, null);
+        g2.drawImage(miDisparo.imagen, miDisparo.posX, miDisparo.posY, null);
         miNave.mueve();
-
+        miDisparo.mueve();
         ///////////////////////////////////////////////////////////////////
         g2 = (Graphics2D) jPanel1.getGraphics();
         g2.drawImage(buffer, 0, 0, null);
+        
     }
 
     /**
@@ -135,18 +137,31 @@ public class VentanaJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        switch(evt.getKeyCode()){
-            case KeyEvent.VK_LEFT: miNave.setPulsadoIzquierda(true);break;
-            case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(true);break;
-            
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_LEFT:
+                miNave.setPulsadoIzquierda(true);
+                break;
+            case KeyEvent.VK_RIGHT:
+                miNave.setPulsadoDerecha(true);
+                break;
+            case KeyEvent.VK_SPACE:
+                miDisparo.posX = miNave.posX;
+                miDisparo.posY = miNave.posY;
+                break;
+
         }
+
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        switch(evt.getKeyCode()){
-            case KeyEvent.VK_LEFT: miNave.setPulsadoIzquierda(false);break;
-            case KeyEvent.VK_RIGHT: miNave.setPulsadoDerecha(false);break;
-            
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_LEFT:
+                miNave.setPulsadoIzquierda(false);
+                break;
+            case KeyEvent.VK_RIGHT:
+                miNave.setPulsadoDerecha(false);
+                break;
+
         }
     }//GEN-LAST:event_formKeyReleased
 
