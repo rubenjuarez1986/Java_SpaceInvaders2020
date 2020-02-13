@@ -50,6 +50,8 @@ public class VentanaJuego extends javax.swing.JFrame {
     Nave miNave = new Nave();
     Disparo miDisparo = new Disparo();
     ArrayList<Disparo> listaDisparos = new ArrayList();
+    //arrayList de explosiones
+    ArrayList<Explosion> listaExplosiones = new ArrayList();
 
     /**
      * Creates new form VentanaJuego
@@ -71,6 +73,11 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
         imagenes[20] = plantilla.getSubimage(0, 320, 66, 32);//sprite de la nave
         imagenes[21] = plantilla.getSubimage(66, 320, 64, 32);//
+        imagenes[23] = plantilla.getSubimage(255, 320, 32, 32);//explosion parteB
+        imagenes[22] = plantilla.getSubimage(255, 289, 32, 32);//explosion parteA
+        imagenes[24] = plantilla.getSubimage(255, 289, 32, 32);//explosion parteA
+        
+
         setSize(ANCHOPANTALLA, ALTOPANTALLA);
         //CREA UNA IMAGEN DEL MISMO ALTO Y ANCHO QUE EL LIENZO
         buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
@@ -133,6 +140,25 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
     }
 
+    private void pintaExplosiones(Graphics2D g2) {
+        //pinta todos las explosiones tambien es parte del array list
+        Explosion explosionAux;
+        for (int i = 0; i < listaExplosiones.size(); i++) {
+            explosionAux = listaExplosiones.get(i);
+            explosionAux.tiempoDeVida--;
+            if (explosionAux.tiempoDeVida > 25) {
+                g2.drawImage(explosionAux.imagen1, explosionAux.posX, explosionAux.posY, null);
+
+            } else {
+                g2.drawImage(explosionAux.imagen2, explosionAux.posX, explosionAux.posY, null);
+            }
+            //si el tiempo de vida de la explosion es menor o igual a 0 la elimino
+            if (explosionAux.tiempoDeVida <= 0) {
+                listaExplosiones.remove(i);
+            }
+        }
+    }
+
     private void bucleDelJuego() {
         //el mètodo gobierna el redibujado de los objetos en el jPanel1
         //primero borro todo lo que hay en el buffer
@@ -146,6 +172,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         //dibujo la nave
         g2.drawImage(miNave.imagen, miNave.posX, miNave.posY, null);
         pintaDisparos(g2);
+        pintaExplosiones(g2);
         miNave.mueve();
         chequeaColision();
         ///////////////////////////////////////////////////////////////////
@@ -169,6 +196,16 @@ public class VentanaJuego extends javax.swing.JFrame {
                     rectanguloMarciano.setFrame(listaMarcianos[i][j].posX, listaMarcianos[i][j].posY, listaMarcianos[i][j].imagen1.getWidth(null), listaMarcianos[i][j].imagen1.getHeight(null));
                     if (rectanguloDisparo.intersects(rectanguloMarciano)) {
                         //si entra aqui es por que han chocado un marciano y el disparo
+
+                        Explosion e = new Explosion();
+                        e.posX = listaMarcianos[i][j].posX;
+                        e.posY = listaMarcianos[i][j].posY;
+                        e.imagen1 = imagenes[23];
+                        e.imagen2 = imagenes[22];
+                        e.imagen1 = imagenes[24];
+                        listaExplosiones.add(e);
+                        e.sonidoExplosion.start();//suena el sonido
+
                         listaMarcianos[i][j].posY = 2000;
                         listaDisparos.remove(k);
 
