@@ -37,7 +37,7 @@ public class Explosion {
 
         } catch (LineUnavailableException ex) {//no se a podido cargar la linea de audio
         } catch (UnsupportedAudioFileException ex) {// no a cargado la imagen
-        } catch (IOException ex) {// no a cargado el soporte
+        } catch (IOException ex) {// no a cargado el 
 
         }
     }

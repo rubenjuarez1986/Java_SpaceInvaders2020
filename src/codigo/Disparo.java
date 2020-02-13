@@ -2,6 +2,8 @@ package codigo;
 
 import java.awt.Image;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  *
@@ -12,20 +14,23 @@ public class Disparo {
     Image imagen = null;
     public int posX = 0;
     public int posY = 0;
+    Clip sonidoDisparo;
 
     public Disparo() {
-        try {//siempre que hace la lectura con algo que hay en el disco,se ejecuta un try
-            //catch,esto hace que proteja lo que se encuentra en el disco
-            imagen = ImageIO.read(getClass().getResource("/imagenes/disparo.png"));
-
-        } catch (Exception e) {
-
-        }
+       try{
+                imagen=ImageIO.read(getClass().getResource("/imagenes/disparo.png"));
+                sonidoDisparo = AudioSystem.getClip();
+                sonidoDisparo.open(
+                    AudioSystem.getAudioInputStream(
+                            getClass().getResource("/sonidos/disparosXBOX.wav"))
+            );
+            }
+            catch(Exception e){
+            }
     }
-
-    public void mueve() {
-        posY -= 5;
-
+      public void mueve(){
+         posY -= 5;
+            
     }
 
     public void posicionaDisparo(Nave _nave) {

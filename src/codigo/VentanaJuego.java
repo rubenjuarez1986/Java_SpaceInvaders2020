@@ -75,8 +75,6 @@ public class VentanaJuego extends javax.swing.JFrame {
         imagenes[21] = plantilla.getSubimage(66, 320, 64, 32);//
         imagenes[23] = plantilla.getSubimage(255, 320, 32, 32);//explosion parteB
         imagenes[22] = plantilla.getSubimage(255, 289, 32, 32);//explosion parteA
-        imagenes[24] = plantilla.getSubimage(255, 289, 32, 32);//explosion parteA
-        
 
         setSize(ANCHOPANTALLA, ALTOPANTALLA);
         //CREA UNA IMAGEN DEL MISMO ALTO Y ANCHO QUE EL LIENZO
@@ -274,6 +272,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                 break;
             case KeyEvent.VK_SPACE:
                 Disparo d = new Disparo();
+                d.sonidoDisparo.start();
                 d.posicionaDisparo(miNave);
                 //agregamos el disparo a la lista de disparos
                 listaDisparos.add(d);
