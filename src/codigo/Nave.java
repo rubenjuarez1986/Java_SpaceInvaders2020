@@ -17,13 +17,7 @@ public class Nave {
   private boolean pulsadoDerecha = false;
     
     public Nave(){
-       try {//siempre que hace la lectura con algo que hay en el disco,se ejecuta un try
-            //catch,esto hace que proteja lo que se encuentra en el disco
-            imagen = ImageIO.read(getClass().getResource("/imagenes/nave.png"));
-            
-        }catch (Exception e){
-            
-    }
+       
        }
    public void mueve(){
        if (pulsadoIzquierda && posX > 0){
